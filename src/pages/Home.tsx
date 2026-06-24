@@ -1,18 +1,21 @@
+import { useState } from 'react';
 import { useFavorites } from '../hooks/useFavorites';
 import { LIVESTOCK_TOOLS, ToolCategory } from '../data';
 import { ToolCard } from '../components/ui/ToolCard';
 import { Link } from 'react-router-dom';
 import { SEO } from '../components/seo/SEO';
-import { AdSensePlaceholder } from '../components/ui/AdSensePlaceholder';
 
 export function Home() {
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { isFavorite, toggleFavorite, favorites } = useFavorites();
+  const [activeCategory, setActiveCategory] = useState<string>('All');
 
-  const categories = Array.from(new Set(LIVESTOCK_TOOLS.map(t => t.category))) as ToolCategory[];
-  const featuredTools = LIVESTOCK_TOOLS.slice(0, 4);
-  const { favorites } = useFavorites();
+  const categories = ['All', ...Array.from(new Set(LIVESTOCK_TOOLS.map(t => t.category)))];
   
   const favoriteTools = LIVESTOCK_TOOLS.filter(tool => favorites.includes(tool.id));
+
+  const displayedTools = activeCategory === 'All' 
+    ? LIVESTOCK_TOOLS 
+    : LIVESTOCK_TOOLS.filter(t => t.category === activeCategory);
 
   return (
     <div className="flex flex-col flex-1 bg-[#F8FAFC]">
@@ -21,7 +24,6 @@ export function Home() {
         description="A professional livestock hub for managing herd planning, cattle growth estimations, and feed breeding schedules. Built to optimize agricultural operations."
         canonicalPath="/"
       />
-      <AdSensePlaceholder type="header" />
       
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#EFF6FF] to-[#F0FDF4] border-b border-slate-200">
@@ -43,20 +45,21 @@ export function Home() {
           <div className="hidden lg:block text-[11px] font-bold text-[#94A3B8] uppercase mb-2">
             Categories
           </div>
-          {categories.map((cat, i) => (
-            <button key={cat} className={`whitespace-nowrap min-h-[48px] lg:min-h-0 flex-shrink-0 text-left px-4 lg:px-3 py-2.5 rounded-md text-[14px] flex items-center gap-2.5 transition-colors border-none ${i === 0 ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#2563EB] font-semibold' : 'bg-transparent text-slate-600 hover:bg-white/50'}`}>
+          {categories.map((cat) => (
+            <button 
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`whitespace-nowrap min-h-[48px] lg:min-h-0 flex-shrink-0 text-left px-4 lg:px-3 py-2.5 rounded-md text-[14px] flex items-center gap-2.5 transition-colors border-none ${activeCategory === cat ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.1)] text-[#2563EB] font-semibold' : 'bg-transparent text-slate-600 hover:bg-white/50'}`}
+            >
               {cat}
             </button>
           ))}
-          <div className="hidden lg:block mt-8">
-            <AdSensePlaceholder type="sidebar" />
-          </div>
         </div>
 
         {/* Center Canvas */}
         <div className="flex-1 w-full overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {featuredTools.map(tool => (
+            {displayedTools.map(tool => (
               <ToolCard 
                 key={tool.id} 
                 tool={tool} 

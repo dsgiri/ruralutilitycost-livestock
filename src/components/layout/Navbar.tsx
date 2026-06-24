@@ -32,15 +32,28 @@ export function Navbar() {
             <div className="ml-10 flex space-x-5 h-full items-center">
               {NAV_LINKS.map((link) => {
                 const isActive = location.pathname === link.href;
-                return (
+                const isExternal = link.href.startsWith('http');
+                const linkClass = `text-[13px] font-medium transition-colors h-full flex flex-col justify-end pb-[18px] ${
+                  isActive 
+                    ? 'text-[#2563EB] border-b-2 border-[#2563EB]' 
+                    : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
+                }`;
+                
+                return isExternal ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClass}
+                  >
+                    {link.name}
+                  </a>
+                ) : (
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-[13px] font-medium transition-colors h-full flex flex-col justify-end pb-[18px] ${
-                      isActive 
-                        ? 'text-[#2563EB] border-b-2 border-[#2563EB]' 
-                        : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
-                    }`}
+                    className={linkClass}
                   >
                     {link.name}
                   </Link>
@@ -73,16 +86,30 @@ export function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {NAV_LINKS.map((link) => {
               const isActive = location.pathname === link.href;
-              return (
+              const isExternal = link.href.startsWith('http');
+              const linkClass = `block px-3 py-3 min-h-[48px] rounded-md text-base font-medium ${
+                isActive 
+                  ? 'bg-blue-50 text-blue-700 font-bold' 
+                  : 'text-slate-600 hover:bg-slate-50'
+              }`;
+
+              return isExternal ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className={linkClass}
+                >
+                  {link.name}
+                </a>
+              ) : (
                 <Link
                   key={link.name}
                   to={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-3 py-3 min-h-[48px] rounded-md text-base font-medium ${
-                    isActive 
-                      ? 'bg-blue-50 text-blue-700 font-bold' 
-                      : 'text-slate-600 hover:bg-slate-50'
-                  }`}
+                  className={linkClass}
                 >
                   {link.name}
                 </Link>

@@ -4,7 +4,6 @@ import { ToolCard } from '../components/ui/ToolCard';
 import { Link } from 'react-router-dom';
 import { HeartCrack } from 'lucide-react';
 import { SEO } from '../components/seo/SEO';
-import { AdSensePlaceholder } from '../components/ui/AdSensePlaceholder';
 
 export function Favorites() {
   const { favorites, isFavorite, toggleFavorite } = useFavorites();
@@ -13,7 +12,6 @@ export function Favorites() {
 
   return (
     <div className="w-full flex-1">
-      <AdSensePlaceholder type="header" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <SEO 
           title="My Favorite Livestock Tools" 

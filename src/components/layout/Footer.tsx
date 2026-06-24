@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
 import { FOOTER_LINKS } from '../../data';
-import { AdSensePlaceholder } from '../ui/AdSensePlaceholder';
 
 export function Footer() {
   return (
     <>
-      <div className="w-full bg-white pb-4 border-t border-slate-200">
-        <AdSensePlaceholder type="footer" />
-      </div>
       <footer className="min-h-[80px] bg-slate-100 border-t border-slate-200 flex items-center mt-auto shrink-0 px-4 sm:px-6 py-6 font-sans">
         <div className="w-full max-w-[1400px] mx-auto flex flex-col sm:flex-row justify-between items-center text-[12px] text-slate-500 gap-4">
           <div className="text-center sm:text-left leading-relaxed">

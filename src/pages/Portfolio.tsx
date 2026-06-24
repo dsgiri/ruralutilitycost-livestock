@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ExternalLink, LayoutGrid, List } from 'lucide-react';
 import { SEO } from '../components/seo/SEO';
-import { AdSensePlaceholder } from '../components/ui/AdSensePlaceholder';
 import portfolioMarkdown from '../data/portfolio-sites.md?raw';
 import { parsePortfolioMarkdown } from '../utils/portfolioParser';
 
@@ -23,7 +22,6 @@ export function Portfolio() {
 
   return (
     <div className="w-full flex-1">
-      <AdSensePlaceholder type="header" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <SEO 
           title="Ecosystem Portfolio" 
@@ -71,12 +69,6 @@ export function Portfolio() {
                       <SiteCard key={site.url} site={site} />
                     ))}
                   </div>
-                  {/* Insert Ad after first row of categories */}
-                  {idx === 0 && (
-                    <div className="mt-12">
-                      <AdSensePlaceholder type="in-content" />
-                    </div>
-                  )}
                 </section>
               );
             })}
